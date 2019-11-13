@@ -1,0 +1,3851 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "开发者平台2.0接口文档",
+        "description": "开发者平台2.0接口文档",
+        "contact": {
+            "email": "zhihao.wang@extremevision.com.cn"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "{schema}://127.0.0.1:8000",
+            "description": "基础地址",
+            "variables": {
+                "schema": {
+                    "enum": [
+                        "https",
+                        "http"
+                    ],
+                    "default": "http"
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/api/register-sms": {
+            "get": {
+                "tags": [
+                    "认证"
+                ],
+                "summary": "用户注册短信",
+                "parameters": [
+                    {
+                        "name": "mobile",
+                        "in": "query",
+                        "description": "手机号",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "13548554126"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/no-content-response"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "参数格式有误,校验失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verify-response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "用户名或密码错误",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/system-response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "认证"
+                ],
+                "summary": "用户注册",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/auth-register-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/auth-me-response"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "参数格式有误,校验失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verify-response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "用户名或密码错误",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/system-response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "认证"
+                ],
+                "summary": "用户登录",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/login-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/auth-login-response"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "参数格式有误,校验失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verify-response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "用户名或密码错误",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/system-response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "认证"
+                ],
+                "summary": "用户信息",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/auth-me-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "delete": {
+                "tags": [
+                    "认证"
+                ],
+                "summary": "退出登录",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/auth-logout-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/refresh": {
+            "put": {
+                "tags": [
+                    "认证"
+                ],
+                "summary": "令牌刷新",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/auth-login-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/project/paginate": {
+            "get": {
+                "tags": [
+                    "项目"
+                ],
+                "summary": "项目分页列表",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/list-request-page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/list-request-per_page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/list-request-q"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/project-paginate-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/project/base/{project_id}": {
+            "get": {
+                "tags": [
+                    "项目"
+                ],
+                "summary": "项目详情-基本信息",
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "项目ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/project-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate": {
+            "get": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "用户认证详情",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-authenticate-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/certificate-type": {
+            "get": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "证件类型列表",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/certificate-type-list-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/domain": {
+            "get": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "领域列表",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/domain-list-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/education": {
+            "get": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "学历列表",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/education-list-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/position": {
+            "get": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "职位列表",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/position-list-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/award-level": {
+            "get": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "奖项等级列表",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/award-level-list-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/upload/licensed-photo": {
+            "post": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "上传持证照片",
+                "requestBody": {
+                    "content": {
+                        "form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/upload-store-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/file-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "参数格式有误,校验失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verify-response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "系统错误",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/system-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/real-name": {
+            "put": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "更新实名认证",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-authenticate-real-name-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-authenticate-real-name-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/educational-info": {
+            "put": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "更新教育信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-authenticate-educational-info-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-authenticate-educational-info-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/job-info": {
+            "put": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "更新职业信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-authenticate-job-info-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-authenticate-job-info-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/upload/award-prove": {
+            "post": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "上传奖项认证照片",
+                "requestBody": {
+                    "content": {
+                        "form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/upload-store-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/file-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "参数格式有误,校验失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verify-response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "系统错误",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/system-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/authenticate/award-info": {
+            "post": {
+                "tags": [
+                    "个人中心-认证信息"
+                ],
+                "summary": "新增奖项信息",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-authenticate-award-info-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-authenticate-award-info-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base": {
+            "get": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "用户基本详情",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-base-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "更新用户基本详情",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-base-update-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-base-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/upload/avatar": {
+            "post": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "头像上传",
+                "requestBody": {
+                    "content": {
+                        "form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/upload-store-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/file-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "参数格式有误,校验失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verify-response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "系统错误",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/system-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/research-direction": {
+            "get": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "研究方向列表",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/research-direction-list-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/update-mobile/old-mobile-verification-code": {
+            "get": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "更新手机号-获取旧手机号验证码",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification-code-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/update-mobile/old-email-verification-code": {
+            "get": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "更新手机号-获取旧邮箱验证码",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "邮箱",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123456@qq.com"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification-code-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/update-mobile/new-mobile-verification-code": {
+            "get": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "更新手机号-获取新手机号验证码",
+                "parameters": [
+                    {
+                        "name": "mobile",
+                        "in": "query",
+                        "description": "手机号",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "13548554126"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification-code-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/bind-email/verification-code": {
+            "get": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "绑定邮箱-获取绑定邮箱验证码",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "邮箱",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123456@qq.com"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification-code-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/update-email/old-email-verification-code": {
+            "get": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "更新邮箱-获取旧邮箱验证码",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "邮箱",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123456@qq.com"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification-code-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/bind-email": {
+            "post": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "绑定邮箱",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-base-bind-email-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/no-content-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/update-mobile": {
+            "patch": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "更新手机号",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-base-update-mobile-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/no-content-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/update-email": {
+            "patch": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "更新邮箱",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-base-update-email-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/no-content-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/base/update-password": {
+            "patch": {
+                "tags": [
+                    "个人中心-基本信息"
+                ],
+                "summary": "更新密码",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-base-update-password-request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/no-content-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/level-credit": {
+            "get": {
+                "tags": [
+                    "个人中心-等级积分"
+                ],
+                "summary": "等级积分详情",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-level-credit-show-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/mirror": {
+            "get": {
+                "tags": [
+                    "个人中心-镜像管理"
+                ],
+                "summary": "镜像管理列表",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-mirror-list-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/participate-project": {
+            "get": {
+                "tags": [
+                    "个人中心-参与项目"
+                ],
+                "summary": "参与项目列表",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user-participate-project-list-response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "令牌认证失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/authorization-response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "查询数据不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/not-found-response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "login-request": {
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "properties": {
+                    "username": {
+                        "description": "用户名",
+                        "type": "string",
+                        "example": "admin"
+                    },
+                    "password": {
+                        "description": "密码",
+                        "type": "string",
+                        "example": "a123456."
+                    }
+                },
+                "type": "object"
+            },
+            "auth-register-request": {
+                "required": [
+                    "username",
+                    "mobile",
+                    "password",
+                    "verification_code"
+                ],
+                "properties": {
+                    "username": {
+                        "description": "用户名",
+                        "type": "string",
+                        "example": "admin"
+                    },
+                    "mobile": {
+                        "description": "手机号",
+                        "type": "string",
+                        "example": "13114854125"
+                    },
+                    "password": {
+                        "description": "密码",
+                        "type": "string",
+                        "example": "a123456."
+                    },
+                    "verification_code": {
+                        "description": "验证码",
+                        "type": "string",
+                        "example": "123456"
+                    }
+                },
+                "type": "object"
+            },
+            "auth-login-response": {
+                "description": "登录成功",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "$ref": "#/components/schemas/auth-and-token-info"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "auth-and-token-info": {
+                "description": "token和用户信息",
+                "allOf": [
+                    {
+                        "properties": {
+                            "token_info": {
+                                "$ref": "#/components/schemas/auth-token-info"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "user_info": {
+                                "$ref": "#/components/schemas/admin-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "auth-me-response": {
+                "description": "用户信息",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "$ref": "#/components/schemas/admin-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "auth-logout-response": {
+                "description": "退出登录",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据信息",
+                                "type": "string",
+                                "example": ""
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "auth-token-info": {
+                "description": "令牌信息",
+                "properties": {
+                    "access_token": {
+                        "description": "令牌",
+                        "type": "string",
+                        "example": "eyJ...(hash串)"
+                    },
+                    "token_type": {
+                        "description": "令牌类型",
+                        "type": "string",
+                        "example": "bearer"
+                    },
+                    "expires_in": {
+                        "description": "有效期",
+                        "type": "integer",
+                        "example": 7200
+                    }
+                },
+                "type": "object"
+            },
+            "admin-show-transformer": {
+                "description": "用户详情过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "username": {
+                        "description": "用户名",
+                        "type": "string",
+                        "example": "admin"
+                    },
+                    "avatar": {
+                        "description": "头像",
+                        "type": "string",
+                        "example": "/storage/avatar/test.jpg"
+                    },
+                    "level": {
+                        "description": "等级",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "integral": {
+                        "description": "积分",
+                        "type": "integer",
+                        "example": 2000
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "award-level-list-response": {
+                "description": "奖项等级列表响应",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/award-level-list-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "award-level-list-transformer": {
+                "description": "奖项等级列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/award-level-list-item-transformer"
+                }
+            },
+            "award-level-list-item-transformer": {
+                "description": "奖项等级列表子级过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "test"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "pagination-response": {
+                "description": "分页信息",
+                "allOf": [
+                    {
+                        "properties": {
+                            "pagination": {
+                                "description": "分页信息",
+                                "type": "object",
+                                "$ref": "#/components/schemas/pagination-item-response"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "pagination-item-response": {
+                "description": "分页信息详细",
+                "properties": {
+                    "total": {
+                        "description": "总数",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "count": {
+                        "description": "当前页总数",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "per_page": {
+                        "description": "每页条数",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "current_page": {
+                        "description": "当前页数",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "total_pages": {
+                        "description": "总页数",
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "success-response": {
+                "description": "成功",
+                "properties": {
+                    "status_code": {
+                        "description": "状态码",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "description": "成功信息",
+                        "type": "string",
+                        "example": "操作成功"
+                    }
+                },
+                "type": "object"
+            },
+            "authorization-response": {
+                "description": "授权失败",
+                "properties": {
+                    "status_code": {
+                        "description": "状态码",
+                        "type": "integer",
+                        "example": 401
+                    },
+                    "message": {
+                        "description": "错误信息",
+                        "type": "string",
+                        "example": "令牌认证失败"
+                    }
+                },
+                "type": "object"
+            },
+            "verify-response": {
+                "description": "校验失败",
+                "properties": {
+                    "status_code": {
+                        "description": "状态码",
+                        "type": "integer",
+                        "example": 422
+                    },
+                    "message": {
+                        "description": "错误信息",
+                        "type": "string",
+                        "example": "字段必须"
+                    }
+                },
+                "type": "object"
+            },
+            "system-response": {
+                "description": "系统错误",
+                "properties": {
+                    "status_code": {
+                        "description": "状态码",
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "message": {
+                        "description": "错误信息",
+                        "type": "string",
+                        "example": "数据有误"
+                    }
+                },
+                "type": "object"
+            },
+            "not-found-response": {
+                "description": "查询失败",
+                "properties": {
+                    "status_code": {
+                        "description": "状态码",
+                        "type": "integer",
+                        "example": 404
+                    },
+                    "message": {
+                        "description": "错误信息",
+                        "type": "string",
+                        "example": "查询数据不存在"
+                    }
+                },
+                "type": "object"
+            },
+            "no-content-response": {
+                "description": "无内容响应",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "type": "string",
+                                "example": ""
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "file-stream-response": {
+                "description": "文件流响应",
+                "required": [
+                    "file"
+                ],
+                "properties": {
+                    "file": {
+                        "description": "此字段仅供样例展示，返回直接下载的流地址，使用GET方式打开请求地址token以query形式传入即可下载",
+                        "type": "file",
+                        "format": "file",
+                        "example": "（二进制文件流）"
+                    }
+                },
+                "type": "object"
+            },
+            "certificate-type-list-response": {
+                "description": "证件类型列表响应",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/certificate-type-list-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "certificate-type-list-transformer": {
+                "description": "证件类型列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/certificate-type-list-item-transformer"
+                }
+            },
+            "certificate-type-list-item-transformer": {
+                "description": "证件类型列表子级过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "test"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "domain-list-response": {
+                "description": "领域列表响应",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/domain-list-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "domain-list-transformer": {
+                "description": "领域列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/domain-list-item-transformer"
+                }
+            },
+            "domain-list-item-transformer": {
+                "description": "领域列表子级过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "test"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "education-list-response": {
+                "description": "学历列表响应",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/education-list-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "education-list-transformer": {
+                "description": "学历列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/education-list-item-transformer"
+                }
+            },
+            "education-list-item-transformer": {
+                "description": "学历列表子级过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "test"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "upload-store-request": {
+                "required": [
+                    "file"
+                ],
+                "properties": {
+                    "file": {
+                        "description": "文件",
+                        "type": "file",
+                        "format": "file",
+                        "example": "（二进制文件流）"
+                    }
+                },
+                "type": "object"
+            },
+            "file-show-response": {
+                "description": "文件详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "$ref": "#/components/schemas/file-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "file-show-transformer": {
+                "description": "文件详情过滤器",
+                "properties": {
+                    "name": {
+                        "description": "文件名",
+                        "type": "string",
+                        "example": "test.jpg"
+                    },
+                    "type": {
+                        "description": "类型",
+                        "type": "string",
+                        "example": "avatar"
+                    },
+                    "path": {
+                        "description": "路径",
+                        "type": "string",
+                        "example": "/storage/avatar/test.jpg"
+                    },
+                    "size": {
+                        "description": "文件大小（KB）",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "request_ip": {
+                        "description": "请求IP",
+                        "type": "string",
+                        "example": "127.0.0.1"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "position-list-response": {
+                "description": "职位列表响应",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/position-list-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "position-list-transformer": {
+                "description": "职位列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/position-list-item-transformer"
+                }
+            },
+            "position-list-item-transformer": {
+                "description": "职位列表子级过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "test"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "project-paginate-response": {
+                "description": "项目信息分页列表",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/project-list-transformer"
+                            },
+                            "meta": {
+                                "$ref": "#/components/schemas/pagination-response"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "project-show-response": {
+                "description": "项目详情基础信息详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/project-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "project-list-transformer": {
+                "description": "项目信息列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/project-list-item-transformer"
+                }
+            },
+            "project-list-item-transformer": {
+                "description": "项目信息列表子级过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "安全工地：安全帽识别"
+                    },
+                    "status": {
+                        "description": "状态（registration：报名中，ing：进行中，end：已结束，iteration：迭代中）",
+                        "type": "string",
+                        "enum": [
+                            "registration",
+                            "ing",
+                            "end",
+                            "iteration"
+                        ],
+                        "example": "registration"
+                    },
+                    "purchase_budget": {
+                        "description": "采购预算",
+                        "type": "integer",
+                        "example": 2000
+                    },
+                    "introduction": {
+                        "description": "简介",
+                        "type": "string",
+                        "example": "工地安全帽佩戴识别"
+                    },
+                    "domain": {
+                        "description": "领域",
+                        "type": "string",
+                        "example": "工地"
+                    },
+                    "research_direction": {
+                        "description": "研究方向",
+                        "type": "string",
+                        "example": "人脸"
+                    },
+                    "level": {
+                        "description": "等级限制",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "project-show-transformer": {
+                "description": "项目信息基本信息详情过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "安全工地：安全帽识别"
+                    },
+                    "status": {
+                        "description": "状态（registration：报名中，ing：进行中，end：已结束，iteration：迭代中）",
+                        "type": "string",
+                        "enum": [
+                            "registration",
+                            "ing",
+                            "end",
+                            "iteration"
+                        ],
+                        "example": "registration"
+                    },
+                    "purchase_budget": {
+                        "description": "采购预算",
+                        "type": "integer",
+                        "example": 2000
+                    },
+                    "introduction": {
+                        "description": "简介",
+                        "type": "string",
+                        "example": "工地安全帽佩戴识别"
+                    },
+                    "domain": {
+                        "description": "领域",
+                        "type": "string",
+                        "example": "工地"
+                    },
+                    "research_direction": {
+                        "description": "研究方向",
+                        "type": "string",
+                        "example": "人脸"
+                    },
+                    "level": {
+                        "description": "等级限制",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "delivery_at": {
+                        "description": "交付时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "research-direction-list-response": {
+                "description": "研究方向列表响应",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/research-direction-list-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "research-direction-list-transformer": {
+                "description": "研究方向列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/research-direction-list-item-transformer"
+                }
+            },
+            "research-direction-list-item-transformer": {
+                "description": "研究方向列表子级过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "test"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "user-authenticate-real-name-request": {
+                "required": [
+                    "actual_name",
+                    "certificate_type_id",
+                    "id_number",
+                    "authenticate_picture"
+                ],
+                "properties": {
+                    "actual_name": {
+                        "description": "真实姓名",
+                        "type": "string",
+                        "example": "张三"
+                    },
+                    "certificate_type_id": {
+                        "description": "证件类型ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "id_number": {
+                        "description": "证件号码",
+                        "type": "string",
+                        "example": "412536198010250120"
+                    },
+                    "authenticate_picture": {
+                        "description": "认证照片",
+                        "type": "string",
+                        "example": "/storage/licensed-photo/test.jpg"
+                    }
+                },
+                "type": "object"
+            },
+            "user-authenticate-educational-info-request": {
+                "required": [
+                    "institution",
+                    "education_id",
+                    "project_experience"
+                ],
+                "properties": {
+                    "institution": {
+                        "description": "院校",
+                        "type": "string",
+                        "example": "北京大学"
+                    },
+                    "education_id": {
+                        "description": "学历ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "project_experience": {
+                        "description": "项目经历",
+                        "type": "string",
+                        "example": "完成河流污染识别算法"
+                    }
+                },
+                "type": "object"
+            },
+            "user-authenticate-job-info-request": {
+                "required": [
+                    "organization",
+                    "position_id",
+                    "domain_id",
+                    "project_experience"
+                ],
+                "properties": {
+                    "organization": {
+                        "description": "组织",
+                        "type": "string",
+                        "example": "北京大学"
+                    },
+                    "position_id": {
+                        "description": "职位ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "domain_id": {
+                        "description": "领域ID",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            1,
+                            2
+                        ]
+                    },
+                    "project_experience": {
+                        "description": "项目经历",
+                        "type": "string",
+                        "example": "完成河流污染识别算法"
+                    }
+                },
+                "type": "object"
+            },
+            "user-authenticate-award-info-request": {
+                "required": [
+                    "competition",
+                    "award_level_id",
+                    "award_picture"
+                ],
+                "properties": {
+                    "competition": {
+                        "description": "竞赛",
+                        "type": "string",
+                        "example": "CV101榜单活动"
+                    },
+                    "award_level_id": {
+                        "description": "奖项等级ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "award_picture": {
+                        "description": "获奖照片",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "/storage/award-picture/test.jpg",
+                            "/storage/award-picture/test2.jpg"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "user-authenticate-show-response": {
+                "description": "用户认证信息详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/user-authenticate-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-authenticate-real-name-show-response": {
+                "description": "用户认证信息实名认证详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/user-authenticate-real-name-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-authenticate-educational-info-show-response": {
+                "description": "用户认证信息教育信息详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/user-authenticate-educational-info-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-authenticate-job-info-show-response": {
+                "description": "用户认证信息职业信息详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/user-authenticate-job-info-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-authenticate-award-info-show-response": {
+                "description": "用户认证信息奖项信息详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/user-authenticate-award-info-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-authenticate-show-transformer": {
+                "description": "用户认证信息详情过滤器",
+                "allOf": [
+                    {
+                        "properties": {
+                            "real_name": {
+                                "description": "实名认证",
+                                "$ref": "#/components/schemas/user-authenticate-real-name-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "educational_info": {
+                                "description": "教育信息",
+                                "$ref": "#/components/schemas/user-authenticate-educational-info-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "job_info": {
+                                "description": "职业信息",
+                                "$ref": "#/components/schemas/user-authenticate-job-info-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "award_info": {
+                                "description": "奖项信息",
+                                "$ref": "#/components/schemas/user-authenticate-award-info-list-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-authenticate-real-name-show-transformer": {
+                "description": "用户认证信息实名认证详情过滤器",
+                "properties": {
+                    "actual_name": {
+                        "description": "真实姓名",
+                        "type": "string",
+                        "example": "张三"
+                    },
+                    "certificate_type_id": {
+                        "description": "证件类型ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "id_number": {
+                        "description": "证件号码",
+                        "type": "string",
+                        "example": "412536198010250120"
+                    },
+                    "authenticate_picture": {
+                        "description": "认证照片",
+                        "type": "string",
+                        "example": "/storage/licensed-photo/test.jpg"
+                    },
+                    "authenticate_status": {
+                        "description": "认证状态",
+                        "type": "string",
+                        "enum": [
+                            "待审核",
+                            "审核失败",
+                            "审核成功"
+                        ],
+                        "example": "待审核"
+                    },
+                    "authenticate_message": {
+                        "description": "认证消息",
+                        "type": "string",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "user-authenticate-educational-info-show-transformer": {
+                "description": "用户认证信息教育信息详情过滤器",
+                "properties": {
+                    "institution": {
+                        "description": "院校",
+                        "type": "string",
+                        "example": "北京大学"
+                    },
+                    "education_id": {
+                        "description": "学历ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "project_experience": {
+                        "description": "项目经历",
+                        "type": "string",
+                        "example": "完成河流污染识别算法"
+                    }
+                },
+                "type": "object"
+            },
+            "user-authenticate-job-info-show-transformer": {
+                "description": "用户认证信息职业信息详情过滤器",
+                "properties": {
+                    "organization": {
+                        "description": "组织",
+                        "type": "string",
+                        "example": "北京大学"
+                    },
+                    "position_id": {
+                        "description": "职位ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "domain_id": {
+                        "description": "领域ID",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            1,
+                            2
+                        ]
+                    },
+                    "project_experience": {
+                        "description": "项目经历",
+                        "type": "string",
+                        "example": "完成河流污染识别算法"
+                    }
+                },
+                "type": "object"
+            },
+            "user-authenticate-award-info-list-transformer": {
+                "description": "用户认证信息奖项信息列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/user-authenticate-award-info-show-transformer"
+                }
+            },
+            "user-authenticate-award-info-show-transformer": {
+                "description": "用户认证信息奖项信息详情过滤器",
+                "properties": {
+                    "competition": {
+                        "description": "竞赛",
+                        "type": "string",
+                        "example": "CV101榜单活动"
+                    },
+                    "award_level_id": {
+                        "description": "奖项等级ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "award_picture": {
+                        "description": "获奖照片",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "/storage/award-picture/test.jpg",
+                            "/storage/award-picture/test2.jpg"
+                        ]
+                    },
+                    "authenticate_status": {
+                        "description": "认证状态",
+                        "type": "string",
+                        "enum": [
+                            "待审核",
+                            "审核失败",
+                            "审核成功"
+                        ],
+                        "example": "待审核"
+                    },
+                    "authenticate_message": {
+                        "description": "认证消息",
+                        "type": "string",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "user-base-update-request": {
+                "required": [
+                    "avatar",
+                    "is_overseas",
+                    "research_direction_id"
+                ],
+                "properties": {
+                    "avatar": {
+                        "description": "头像",
+                        "type": "string",
+                        "example": "/storage/avatar/test.jpg"
+                    },
+                    "province": {
+                        "description": "省（不是海外必填）",
+                        "type": "string",
+                        "example": "广东省"
+                    },
+                    "city": {
+                        "description": "市（不是海外必填）",
+                        "type": "string",
+                        "example": "深圳市"
+                    },
+                    "county": {
+                        "description": "县（不是海外必填）",
+                        "type": "string",
+                        "example": "南山区"
+                    },
+                    "is_overseas": {
+                        "description": "是否海外（0：不是，1：是）",
+                        "type": "integer",
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "example": 0
+                    },
+                    "research_direction_id": {
+                        "description": "研究方向ID",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            1,
+                            2
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "user-base-update-mobile-request": {
+                "required": [
+                    "authentication_type",
+                    "new_mobile",
+                    "new_mobile_verification_code"
+                ],
+                "properties": {
+                    "authentication_type": {
+                        "description": "验证类型",
+                        "type": "string",
+                        "enum": [
+                            "mobile",
+                            "email"
+                        ],
+                        "example": "mobile"
+                    },
+                    "old_mobile_verification_code": {
+                        "description": "旧手机号验证码（验证类型为‘mobile’必须）",
+                        "type": "string",
+                        "example": "12345"
+                    },
+                    "old_email_verification_code": {
+                        "description": "邮箱验证码（验证类型为‘email’必须）",
+                        "type": "string",
+                        "example": "12345"
+                    },
+                    "new_mobile": {
+                        "description": "新手机号",
+                        "type": "string",
+                        "example": "13545874587"
+                    },
+                    "new_mobile_verification_code": {
+                        "description": "新手机号验证码",
+                        "type": "string",
+                        "example": "12345"
+                    }
+                },
+                "type": "object"
+            },
+            "user-base-update-email-request": {
+                "required": [
+                    "old_email_verification_code",
+                    "old_email",
+                    "new_email"
+                ],
+                "properties": {
+                    "old_email_verification_code": {
+                        "description": "旧邮箱验证码",
+                        "type": "string",
+                        "example": "12345"
+                    },
+                    "old_email": {
+                        "description": "旧邮箱",
+                        "type": "string",
+                        "example": "123456@qq.com"
+                    },
+                    "new_email": {
+                        "description": "新邮箱",
+                        "type": "string",
+                        "example": "111111@qq.com"
+                    }
+                },
+                "type": "object"
+            },
+            "user-base-update-password-request": {
+                "required": [
+                    "old_password",
+                    "new_password"
+                ],
+                "properties": {
+                    "old_password": {
+                        "description": "旧密码",
+                        "type": "string",
+                        "example": "123456Qq"
+                    },
+                    "new_password": {
+                        "description": "新密码",
+                        "type": "string",
+                        "example": "123456Aa"
+                    }
+                },
+                "type": "object"
+            },
+            "user-base-bind-email-request": {
+                "required": [
+                    "email",
+                    "verification_code"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "邮箱",
+                        "type": "string",
+                        "example": "123456@qq.com"
+                    },
+                    "verification_code": {
+                        "description": "验证码",
+                        "type": "string",
+                        "example": "12345"
+                    }
+                },
+                "type": "object"
+            },
+            "user-base-show-response": {
+                "description": "用户基础信息详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/user-base-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-base-show-transformer": {
+                "description": "用户基础信息详情过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "username": {
+                        "description": "用户名",
+                        "type": "string",
+                        "example": "test"
+                    },
+                    "avatar": {
+                        "description": "头像",
+                        "type": "string",
+                        "example": "/storage/avatar/test.jpg"
+                    },
+                    "province": {
+                        "description": "省",
+                        "type": "string",
+                        "example": "广东省"
+                    },
+                    "city": {
+                        "description": "市",
+                        "type": "string",
+                        "example": "深圳市"
+                    },
+                    "county": {
+                        "description": "县",
+                        "type": "string",
+                        "example": "南山区"
+                    },
+                    "is_overseas": {
+                        "description": "是否海外",
+                        "type": "integer",
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "example": 0
+                    },
+                    "research_direction_id": {
+                        "description": "研究方向ID",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            1,
+                            2
+                        ]
+                    },
+                    "mobile": {
+                        "description": "手机号",
+                        "type": "string",
+                        "example": "13545621354"
+                    },
+                    "email": {
+                        "description": "邮箱",
+                        "type": "string",
+                        "example": "123456@qq.com"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "user-level-credit-show-response": {
+                "description": "等级积分信息详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/user-level-credit-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-level-credit-show-transformer": {
+                "description": "等级积分信息详情过滤器",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/user-level-credit-show-base-transformer"
+                    },
+                    {
+                        "properties": {
+                            "upgrade_condition": {
+                                "description": "升级条件",
+                                "$ref": "#/components/schemas/user-level-credit-show-upgrade-condition-transformer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "integral_record": {
+                                "description": "积分明细",
+                                "$ref": "#/components/schemas/user-level-credit-show-integral-record-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-level-credit-show-base-transformer": {
+                "description": "等级积分信息详情基础过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "level": {
+                        "description": "等级",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "integral": {
+                        "description": "积分",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "general_integral": {
+                        "description": "通用积分",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "dedicated_integral": {
+                        "description": "专用积分",
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "gpu_available_time": {
+                        "description": "GPU可用时长",
+                        "type": "string",
+                        "example": "200min"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "user-level-credit-show-upgrade-condition-transformer": {
+                "description": "等级积分信息详情升级条件过滤器",
+                "properties": {
+                    "experience": {
+                        "description": "升级所需经验",
+                        "type": "integer",
+                        "example": 1200
+                    },
+                    "business_algorithm": {
+                        "description": "升级所需商业算法个数",
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "algorithm_type": {
+                        "description": "升级所需算法类型个数",
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "project": {
+                        "description": "升级所需项目个数",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "current_experience": {
+                        "description": "当前经验",
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "current_business_algorithm": {
+                        "description": "当前商业算法个数",
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "current_algorithm_type": {
+                        "description": "当前算法类型个数",
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "current_project": {
+                        "description": "当前项目个数",
+                        "type": "integer",
+                        "example": 0
+                    }
+                },
+                "type": "object"
+            },
+            "user-level-credit-show-integral-record-transformer": {
+                "description": "等级积分信息详情积分明细过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/user-level-credit-show-integral-record-item-transformer"
+                }
+            },
+            "user-level-credit-show-integral-record-item-transformer": {
+                "description": "等级积分信息详情积分明细子级过滤器",
+                "properties": {
+                    "change": {
+                        "description": "变化值",
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "is_positive_growth": {
+                        "description": "是否正增长（0：否，1：是）",
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "message": {
+                        "description": "消息",
+                        "type": "string",
+                        "example": "完成注册获取积分"
+                    },
+                    "created_at": {
+                        "description": "时间",
+                        "type": "string",
+                        "example": "2019-11-08 17:16:40"
+                    }
+                },
+                "type": "object"
+            },
+            "user-mirror-list-response": {
+                "description": "镜像管理信息列表",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/user-mirror-list-transformer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "meta": {
+                                "description": "额外数据",
+                                "$ref": "#/components/schemas/user-mirror-list-meta-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-mirror-list-transformer": {
+                "description": "镜像管理信息列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/user-mirror-list-item-transformer"
+                }
+            },
+            "user-mirror-list-item-transformer": {
+                "description": "镜像管理信息列表子级过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "tensorflow基础镜像"
+                    },
+                    "tag": {
+                        "description": "标签",
+                        "type": "string",
+                        "example": "1.0.0"
+                    },
+                    "size": {
+                        "description": "大小",
+                        "type": "string",
+                        "example": "20.5"
+                    },
+                    "remark": {
+                        "description": "备注",
+                        "type": "string",
+                        "example": "tensorflow基础镜像安装基础扩展"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "user-mirror-list-meta-transformer": {
+                "description": "镜像管理信息列表额外信息过滤器",
+                "properties": {
+                    "free_mirror_space": {
+                        "description": "免费镜像空间",
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "surplus_mirror_space": {
+                        "description": "剩余镜像空间",
+                        "type": "string",
+                        "example": "50.5"
+                    }
+                },
+                "type": "object"
+            },
+            "user-participate-project-list-response": {
+                "description": "参与项目信息列表",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/user-participate-project-list-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-participate-project-list-transformer": {
+                "description": "参与项目信息列表过滤器",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/user-participate-project-list-item-transformer"
+                }
+            },
+            "user-participate-project-list-item-transformer": {
+                "description": "参与项目信息列表子级过滤器",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/user-participate-project-list-item-base-transformer"
+                    },
+                    {
+                        "properties": {
+                            "instance": {
+                                "description": "实例",
+                                "$ref": "#/components/schemas/user-participate-project-list-item-instance-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "user-participate-project-list-item-base-transformer": {
+                "description": "参与项目信息列表子级基础过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "安全工地：安全帽识别"
+                    },
+                    "status": {
+                        "description": "状态（registration：报名中，ing：进行中，end：已结束，iteration：迭代中）",
+                        "type": "string",
+                        "enum": [
+                            "registration",
+                            "ing",
+                            "end",
+                            "iteration"
+                        ],
+                        "example": "registration"
+                    },
+                    "purchase_budget": {
+                        "description": "采购预算",
+                        "type": "integer",
+                        "example": 2000
+                    },
+                    "introduction": {
+                        "description": "简介",
+                        "type": "string",
+                        "example": "工地安全帽佩戴识别"
+                    },
+                    "domain": {
+                        "description": "领域",
+                        "type": "string",
+                        "example": "工地"
+                    },
+                    "research_direction": {
+                        "description": "研究方向",
+                        "type": "string",
+                        "example": "人脸"
+                    },
+                    "level": {
+                        "description": "等级限制",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    },
+                    "updated_at": {
+                        "description": "更新时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "user-participate-project-list-item-instance-transformer": {
+                "description": "参与项目信息列表子级实例过滤器",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名称",
+                        "type": "string",
+                        "example": "安全帽识别"
+                    },
+                    "gpu": {
+                        "description": "GPU",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "cpu": {
+                        "description": "CPU",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "ram": {
+                        "description": "内存",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "time_consuming": {
+                        "description": "耗时",
+                        "type": "string",
+                        "example": "2h30min"
+                    },
+                    "consumption_points": {
+                        "description": "消耗积分",
+                        "type": "integer",
+                        "example": 1200
+                    },
+                    "status": {
+                        "description": "状态（creating：创建中，coding：编码中，training：训练中，training_completed：训练完成，testing：测试中，finished_test：测试完成，project_deadline：项目截止，stop：停用）",
+                        "type": "creating",
+                        "enum": [
+                            "creating",
+                            "coding",
+                            "training",
+                            "training_completed",
+                            "testing",
+                            "finished_test",
+                            "project_deadline",
+                            "stop"
+                        ],
+                        "example": "creating"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "string",
+                        "example": "2019-08-27 14:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "verification-code-show-response": {
+                "description": "手机号验证码详情",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/success-response"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "数据集合",
+                                "$ref": "#/components/schemas/verification-code-show-transformer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "verification-code-show-transformer": {
+                "description": "手机号验证码过滤器",
+                "properties": {
+                    "verification_code": {
+                        "description": "验证码",
+                        "type": "string",
+                        "example": "12345"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "parameters": {
+            "list-request-page": {
+                "name": "page",
+                "in": "query",
+                "description": "当前页数",
+                "required": false,
+                "schema": {
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 1,
+                    "example": 1
+                }
+            },
+            "list-request-per_page": {
+                "name": "per_page",
+                "in": "query",
+                "description": "每页条数",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 1,
+                    "example": 1
+                }
+            },
+            "list-request-q": {
+                "name": "q",
+                "in": "query",
+                "description": "查询关键字",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "format": "string"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://192.168.1.234:82/oauth/authorize",
+                        "tokenUrl": "http://192.168.1.234:82/oauth/token",
+                        "refreshUrl": "http://192.168.1.234:82/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "html文档",
+        "url": "http://127.0.0.1:8000/doc"
+    }
+}

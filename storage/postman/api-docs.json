@@ -1,0 +1,1579 @@
+{
+    "info": {
+        "_postman_id": "waMMz86Bf9ZCC1Fg19bxsFBtxguxwwckOwbOAmvPZ3SIS8wCEJtaxigeYVkTs5ox-1573633053",
+        "name": "开发者平台2.0接口文档",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "用户注册短信",
+            "request": {
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/register-sms?mobile=13548554126",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "register-sms"
+                    ],
+                    "query": [
+                        {
+                            "key": "mobile",
+                            "value": "13548554126"
+                        }
+                    ]
+                },
+                "description": "用户注册短信"
+            },
+            "response": []
+        },
+        {
+            "name": "用户注册",
+            "request": {
+                "method": "post",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"admin\",\n    \"mobile\": \"13114854125\",\n    \"password\": \"a123456.\",\n    \"verification_code\": \"123456\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/register",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "register"
+                    ],
+                    "query": []
+                },
+                "description": "用户注册"
+            },
+            "response": []
+        },
+        {
+            "name": "用户登录",
+            "request": {
+                "method": "post",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"a123456.\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/login",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "login"
+                    ],
+                    "query": []
+                },
+                "description": "用户登录"
+            },
+            "response": []
+        },
+        {
+            "name": "用户信息",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/me",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "me"
+                    ],
+                    "query": []
+                },
+                "description": "用户信息"
+            },
+            "response": []
+        },
+        {
+            "name": "退出登录",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "delete",
+                "url": {
+                    "raw": "{{host}}/api/logout",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "logout"
+                    ],
+                    "query": []
+                },
+                "description": "退出登录"
+            },
+            "response": []
+        },
+        {
+            "name": "令牌刷新",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "put",
+                "url": {
+                    "raw": "{{host}}/api/refresh",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "refresh"
+                    ],
+                    "query": []
+                },
+                "description": "令牌刷新"
+            },
+            "response": []
+        },
+        {
+            "name": "项目分页列表",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/project/paginate?page=1&per_page=1&q=--",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "project",
+                        "paginate"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": 1
+                        },
+                        {
+                            "key": "per_page",
+                            "value": 1
+                        },
+                        {
+                            "key": "q",
+                            "value": "--"
+                        }
+                    ]
+                },
+                "description": "项目分页列表"
+            },
+            "response": []
+        },
+        {
+            "name": "项目详情-基本信息",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/project/base/{project_id}",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "project",
+                        "base",
+                        "{project_id}"
+                    ],
+                    "query": []
+                },
+                "description": "项目详情-基本信息"
+            },
+            "response": []
+        },
+        {
+            "name": "用户认证详情",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate"
+                    ],
+                    "query": []
+                },
+                "description": "用户认证详情"
+            },
+            "response": []
+        },
+        {
+            "name": "证件类型列表",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/certificate-type",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "certificate-type"
+                    ],
+                    "query": []
+                },
+                "description": "证件类型列表"
+            },
+            "response": []
+        },
+        {
+            "name": "领域列表",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/domain",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "domain"
+                    ],
+                    "query": []
+                },
+                "description": "领域列表"
+            },
+            "response": []
+        },
+        {
+            "name": "学历列表",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/education",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "education"
+                    ],
+                    "query": []
+                },
+                "description": "学历列表"
+            },
+            "response": []
+        },
+        {
+            "name": "职位列表",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/position",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "position"
+                    ],
+                    "query": []
+                },
+                "description": "职位列表"
+            },
+            "response": []
+        },
+        {
+            "name": "奖项等级列表",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/award-level",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "award-level"
+                    ],
+                    "query": []
+                },
+                "description": "奖项等级列表"
+            },
+            "response": []
+        },
+        {
+            "name": "上传持证照片",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "post",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "form-data",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": {
+                        "file": {
+                            "key": "file",
+                            "value": "（二进制文件流）",
+                            "type": "file"
+                        }
+                    },
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/upload/licensed-photo",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "upload",
+                        "licensed-photo"
+                    ],
+                    "query": []
+                },
+                "description": "上传持证照片"
+            },
+            "response": []
+        },
+        {
+            "name": "更新实名认证",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "put",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"actual_name\": \"张三\",\n    \"certificate_type_id\": 1,\n    \"id_number\": \"412536198010250120\",\n    \"authenticate_picture\": \"/storage/licensed-photo/test.jpg\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/real-name",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "real-name"
+                    ],
+                    "query": []
+                },
+                "description": "更新实名认证"
+            },
+            "response": []
+        },
+        {
+            "name": "更新教育信息",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "put",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"institution\": \"北京大学\",\n    \"education_id\": 1,\n    \"project_experience\": \"完成河流污染识别算法\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/educational-info",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "educational-info"
+                    ],
+                    "query": []
+                },
+                "description": "更新教育信息"
+            },
+            "response": []
+        },
+        {
+            "name": "更新职业信息",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "put",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"organization\": \"北京大学\",\n    \"position_id\": 1,\n    \"domain_id\": [\n        1,\n        2\n    ],\n    \"project_experience\": \"完成河流污染识别算法\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/job-info",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "job-info"
+                    ],
+                    "query": []
+                },
+                "description": "更新职业信息"
+            },
+            "response": []
+        },
+        {
+            "name": "上传奖项认证照片",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "post",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "form-data",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": {
+                        "file": {
+                            "key": "file",
+                            "value": "（二进制文件流）",
+                            "type": "file"
+                        }
+                    },
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/upload/award-prove",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "upload",
+                        "award-prove"
+                    ],
+                    "query": []
+                },
+                "description": "上传奖项认证照片"
+            },
+            "response": []
+        },
+        {
+            "name": "新增奖项信息",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "post",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"competition\": \"CV101榜单活动\",\n    \"award_level_id\": 1,\n    \"award_picture\": [\n        \"/storage/award-picture/test.jpg\",\n        \"/storage/award-picture/test2.jpg\"\n    ]\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/authenticate/award-info",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "authenticate",
+                        "award-info"
+                    ],
+                    "query": []
+                },
+                "description": "新增奖项信息"
+            },
+            "response": []
+        },
+        {
+            "name": "用户基本详情",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/base",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base"
+                    ],
+                    "query": []
+                },
+                "description": "用户基本详情"
+            },
+            "response": []
+        },
+        {
+            "name": "更新用户基本详情",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "put",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"avatar\": \"/storage/avatar/test.jpg\",\n    \"province\": \"广东省\",\n    \"city\": \"深圳市\",\n    \"county\": \"南山区\",\n    \"is_overseas\": 0,\n    \"research_direction_id\": [\n        1,\n        2\n    ]\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/base",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base"
+                    ],
+                    "query": []
+                },
+                "description": "更新用户基本详情"
+            },
+            "response": []
+        },
+        {
+            "name": "头像上传",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "post",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "form-data",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": {
+                        "file": {
+                            "key": "file",
+                            "value": "（二进制文件流）",
+                            "type": "file"
+                        }
+                    },
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/base/upload/avatar",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "upload",
+                        "avatar"
+                    ],
+                    "query": []
+                },
+                "description": "头像上传"
+            },
+            "response": []
+        },
+        {
+            "name": "研究方向列表",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/base/research-direction",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "research-direction"
+                    ],
+                    "query": []
+                },
+                "description": "研究方向列表"
+            },
+            "response": []
+        },
+        {
+            "name": "更新手机号-获取旧手机号验证码",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/base/update-mobile/old-mobile-verification-code",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "update-mobile",
+                        "old-mobile-verification-code"
+                    ],
+                    "query": []
+                },
+                "description": "更新手机号-获取旧手机号验证码"
+            },
+            "response": []
+        },
+        {
+            "name": "更新手机号-获取旧邮箱验证码",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/base/update-mobile/old-email-verification-code?email=123456@qq.com",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "update-mobile",
+                        "old-email-verification-code"
+                    ],
+                    "query": [
+                        {
+                            "key": "email",
+                            "value": "123456@qq.com"
+                        }
+                    ]
+                },
+                "description": "更新手机号-获取旧邮箱验证码"
+            },
+            "response": []
+        },
+        {
+            "name": "更新手机号-获取新手机号验证码",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/base/update-mobile/new-mobile-verification-code?mobile=13548554126",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "update-mobile",
+                        "new-mobile-verification-code"
+                    ],
+                    "query": [
+                        {
+                            "key": "mobile",
+                            "value": "13548554126"
+                        }
+                    ]
+                },
+                "description": "更新手机号-获取新手机号验证码"
+            },
+            "response": []
+        },
+        {
+            "name": "绑定邮箱-获取绑定邮箱验证码",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/base/bind-email/verification-code?email=123456@qq.com",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "bind-email",
+                        "verification-code"
+                    ],
+                    "query": [
+                        {
+                            "key": "email",
+                            "value": "123456@qq.com"
+                        }
+                    ]
+                },
+                "description": "绑定邮箱-获取绑定邮箱验证码"
+            },
+            "response": []
+        },
+        {
+            "name": "更新邮箱-获取旧邮箱验证码",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/base/update-email/old-email-verification-code?email=123456@qq.com",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "update-email",
+                        "old-email-verification-code"
+                    ],
+                    "query": [
+                        {
+                            "key": "email",
+                            "value": "123456@qq.com"
+                        }
+                    ]
+                },
+                "description": "更新邮箱-获取旧邮箱验证码"
+            },
+            "response": []
+        },
+        {
+            "name": "绑定邮箱",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "post",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"email\": \"123456@qq.com\",\n    \"verification_code\": \"12345\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/base/bind-email",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "bind-email"
+                    ],
+                    "query": []
+                },
+                "description": "绑定邮箱"
+            },
+            "response": []
+        },
+        {
+            "name": "更新手机号",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "patch",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"authentication_type\": \"mobile\",\n    \"old_mobile_verification_code\": \"12345\",\n    \"old_email_verification_code\": \"12345\",\n    \"new_mobile\": \"13545874587\",\n    \"new_mobile_verification_code\": \"12345\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/base/update-mobile",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "update-mobile"
+                    ],
+                    "query": []
+                },
+                "description": "更新手机号"
+            },
+            "response": []
+        },
+        {
+            "name": "更新邮箱",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "patch",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"old_email_verification_code\": \"12345\",\n    \"old_email\": \"123456@qq.com\",\n    \"new_email\": \"111111@qq.com\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/base/update-email",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "update-email"
+                    ],
+                    "query": []
+                },
+                "description": "更新邮箱"
+            },
+            "response": []
+        },
+        {
+            "name": "更新密码",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "patch",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"old_password\": \"123456Qq\",\n    \"new_password\": \"123456Aa\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{host}}/api/user/base/update-password",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "base",
+                        "update-password"
+                    ],
+                    "query": []
+                },
+                "description": "更新密码"
+            },
+            "response": []
+        },
+        {
+            "name": "等级积分详情",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/level-credit",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "level-credit"
+                    ],
+                    "query": []
+                },
+                "description": "等级积分详情"
+            },
+            "response": []
+        },
+        {
+            "name": "镜像管理列表",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/mirror",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "mirror"
+                    ],
+                    "query": []
+                },
+                "description": "镜像管理列表"
+            },
+            "response": []
+        },
+        {
+            "name": "参与项目列表",
+            "request": {
+                "auth": {
+                    "type": "oauth2",
+                    "oauth2": [
+                        {
+                            "key": "accessToken",
+                            "value": "{{token}}",
+                            "type": "string"
+                        },
+                        {
+                            "key": "addTokenTo",
+                            "value": "header",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "get",
+                "url": {
+                    "raw": "{{host}}/api/user/participate-project",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "",
+                        "api",
+                        "user",
+                        "participate-project"
+                    ],
+                    "query": []
+                },
+                "description": "参与项目列表"
+            },
+            "response": []
+        }
+    ]
+}
